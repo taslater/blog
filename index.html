@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="css/main.css" />
+    <link rel="stylesheet" href="css/twitter.css" />
+    <link rel="stylesheet" href="js/highlight/styles/gradient-light.min.css" />
+    <script src="js/highlight/highlight.min.js"></script>
+    <title>Spoiling Wordle</title>
+  </head>
+  <body>
+    <div class="flex-wrapper">
+      <div class="content-container">
+        <article>
+          <header>
+            <h1>Spoiling Wordle</h1>
+            <div class="byline">
+              <address class="author">
+                <a rel="author" href="https://github.com/taslater"
+                  >T.A. Slater</a
+                >
+              </address>
+              <time pubdate datetime="2022-01-07" title="January 7th, 2022"
+                >Jan 7, 2022</time
+              >
+            </div>
+          </header>
+          <section>
+            <p>
+              Wordle is a word game where you're given six guesses to find a
+              five letter word. (Play it
+              <a href="https://www.powerlanguage.co.uk/wordle/">here</a>.) This
+              article gives away all the answers to Wordle and explains how I
+              ruined this fun game for myself. Click below to spoil your own
+              fun!
+            </p>
+
+            <div class="flex-wrapper">
+              <button id="show-spoilers">Click to reveal spoilers</button>
+            </div>
+
+            <div id="spoilers">
+              <label for="spoil-date">Spoil Date:</label>
+              <br />
+
+              <input
+                type="date"
+                id="spoil-date"
+                name="spoil-date"
+                min="2021-06-19"
+                required
+              />
+              <br />
+              <button id="submit">Get solution</button>
+              <div><p id="solution"></p></div>
+            </div>
+          </section>
+          <section>
+            <h2>How does this work?</h2>
+            <p>
+              I like Wordle. I read about it
+              <a
+                href="https://www.nytimes.com/2022/01/03/technology/wordle-word-game-creator.html"
+                >in the NYT</a
+              >
+              like everybody else. I also read a little about the developer
+              there. He sounds like a nice guy so I decided to dig through his
+              code and hack the game he wrote for his partner.
+            </p>
+            <p>Looking at the source code we notice two things:</p>
+            <ol>
+              <li>
+                This javascript has been processed by Babel and a bundler.
+              </li>
+              <li>There are two giant lists of five-letter words.</li>
+            </ol>
+            <p>
+              Bundled and minified JavaScript is unpleasant to read but not
+              impossible. I&#39;m not experieced enough to guess what framework
+              was used, but I&#39;d love to hear from someone who knows!
+            </p>
+          </section>
+          <section>
+            <h2>Two long lists of words</h2>
+            <p>
+              One list is full of common words and <em>not</em> alphabetized:
+            </p>
+            <pre><code class="lang-javascript">var Aa = [
+  "cigar",
+  "rebut",
+  "sissy",
+  "humph",
+  "awake",
+  ...
+]</code></pre>
+            <p>
+              The other list is full of suspicious-looking words and
+              <em>is</em> alphabetized.
+            </p>
+            <pre><code class="lang-javascript">var La = [
+  "aahed",
+  "aalii",
+  "aargh",
+  "aarti",
+  "abaca",
+  ...
+]</code></pre>
+            <p>
+              As
+              <a href="https://twitter.com/dvir_segal">Dvir Segal</a> expressed:
+            </p>
+            <blockquote class="twitter-tweet">
+              <p lang="en" dir="ltr">
+                Ok, I completely ruined the
+                <a
+                  href="https://twitter.com/hashtag/Wordle?src=hash&amp;ref_src=twsrc%5Etfw"
+                  >#Wordle</a
+                >
+                experience for myself. I looked into its source code (why?!?!?)
+                and found the game holds an array of all possibilities 🙄<br /><br />Game
+                over.
+                <a href="https://t.co/PwLQl8UhZ2">pic.twitter.com/PwLQl8UhZ2</a>
+              </p>
+              &mdash; Dvir Segal (@dvir_segal)
+              <a
+                href="https://twitter.com/dvir_segal/status/1477985740109885440?ref_src=twsrc%5Etfw"
+                >January 3, 2022</a
+              >
+            </blockquote>
+            <script
+              async
+              src="https://platform.twitter.com/widgets.js"
+              charset="utf-8"
+            ></script>
+            <script
+              async
+              src="https://platform.twitter.com/widgets.js"
+              charset="utf-8"
+            ></script>
+            <p>
+              So there you go: don&#39;t look if you don&#39;t want to know. The
+              first list is every possible answer to the puzzle and the other is
+              every guess that Wordle won&#39;t reject (it won&#39;t accept the
+              guess &quot;AEIOU&quot;).
+            </p>
+          </section>
+          <section>
+            <h2 id="picking-the-daily-solution-from-the-list">
+              Picking the daily solution from the list
+            </h2>
+            <p>
+              Are you ready to really ruin Wordle for yourself? How does Wordle
+              select
+              <em>today&#39;s</em> solution from the array of every possible
+              solution?
+            </p>
+            <pre><code class="lang-javascript">// June 19, 2021
+var Ra = new Date(2021, 5, 19, 0, 0, 0, 0);
+// Pa(today) = # days since June 19, 2021
+// modulo the number of possible solutions
+// (Aa is the array of every possible solution)
+function Pa(e) {
+  var a,
+    s = Na(e);
+  return (a = s % Aa.length), Aa[a];
+}
+// Subtracts June 19, 2021 from "e"
+// to get the number of days since
+function Na(e) {
+  return $a(Ra, e);
+}
+// Returns number of days "a" is
+// later than "e"
+function $a(e, a) {
+  var s = new Date(e),
+    t = new Date(a).setHours(0, 0, 0, 0) - s.setHours(0, 0, 0, 0);
+  return Math.floor(t / 864e5);
+}</code></pre>
+            <p>
+              It counts the days since June 19, 2021 (Wordle&#39;s launch date?)
+              and reduces modulo the number of possible solutions to get the
+              array index.
+            </p>
+            <p>
+              In other words, it goes through the list in order. Open the source
+              code and find the array. Find today&#39;s solution. Tomorrow&#39;s
+              is next. Now you know every Wordle solution to eternity (or until
+              the source changes).
+            </p>
+            <p>
+              Also, FWIW it seems your current Wordle solution depends on your
+              timezone!
+            </p>
+          </section>
+        </article>
+      </div>
+    </div>
+  </body>
+  <script>
+    hljs.highlightAll();
+  </script>
+  <script src="js/main.js"></script>
+</html>

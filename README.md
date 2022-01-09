@@ -1,2 +1,3 @@
-# blog
-writing about code and data
+# Another Blog
+
+Writing about code and data, WIP.
