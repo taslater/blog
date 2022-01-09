@@ -15,7 +15,7 @@
       <div class="content-container">
         <article>
           <header>
-            <h1>Spoiling Wordle</h1>
+            <h1>Spoiling a Nice Game</h1>
             <div class="byline">
               <address class="author">
                 <a rel="author" href="https://github.com/taslater"
@@ -65,7 +65,7 @@
                 href="https://www.nytimes.com/2022/01/03/technology/wordle-word-game-creator.html"
                 >in the NYT</a
               >
-              like everybody else. I also read a little about the developer
+              (like everybody else). I also read a little about the developer
               there. He sounds like a nice guy so I decided to dig through his
               code and hack the game he wrote for his partner.
             </p>
@@ -78,8 +78,8 @@
             </ol>
             <p>
               Bundled and minified JavaScript is unpleasant to read but not
-              impossible. I&#39;m not experieced enough to guess what framework
-              was used, but I&#39;d love to hear from someone who knows!
+              impossible. I'm not experieced enough to guess what framework was
+              used, but I'd love to hear from someone who knows!
             </p>
           </section>
           <section>
@@ -109,7 +109,7 @@
 ]</code></pre>
             <p>
               As
-              <a href="https://twitter.com/dvir_segal">Dvir Segal</a> expressed:
+              <a href="https://twitter.com/dvir_segal">Dvir Segal</a> put it:
             </p>
             <blockquote class="twitter-tweet">
               <p lang="en" dir="ltr">
@@ -140,10 +140,10 @@
               charset="utf-8"
             ></script>
             <p>
-              So there you go: don&#39;t look if you don&#39;t want to know. The
-              first list is every possible answer to the puzzle and the other is
-              every guess that Wordle won&#39;t reject (it won&#39;t accept the
-              guess &quot;AEIOU&quot;).
+              So there you go: don't go sniffing through source code if you
+              don't want to know. The first list contains every possible answer
+              to the puzzle and the other is every guess that Wordle won't
+              reject ("AEIOU" will be rejected).
             </p>
           </section>
           <section>
@@ -153,8 +153,8 @@
             <p>
               Are you ready to really ruin Wordle for yourself? How does Wordle
               select
-              <em>today&#39;s</em> solution from the array of every possible
-              solution?
+              <em>today's</em> solution from the array of all possible
+              solutions?
             </p>
             <pre><code class="lang-javascript">// June 19, 2021
 var Ra = new Date(2021, 5, 19, 0, 0, 0, 0);
@@ -179,19 +179,24 @@ function $a(e, a) {
   return Math.floor(t / 864e5);
 }</code></pre>
             <p>
-              It counts the days since June 19, 2021 (Wordle&#39;s launch date?)
-              and reduces modulo the number of possible solutions to get the
-              array index.
+              It counts the days since June 19, 2021 (Wordle's launch date?) and
+              reduces modulo the number of possible solutions to get the array
+              index.
             </p>
             <p>
-              In other words, it goes through the list in order. Open the source
-              code and find the array. Find today&#39;s solution. Tomorrow&#39;s
-              is next. Now you know every Wordle solution to eternity (or until
-              the source changes).
+              In other words, it goes through the list in order, one solution
+              after the other. Open the source code and find the array. Find
+              today's solution. Tomorrow's is next. Now you know every Wordle
+              solution to eternity (or until the source changes).
             </p>
             <p>
-              Also, FWIW it seems your current Wordle solution depends on your
-              timezone!
+              To save you the trouble of looking for yourself, I've written the
+              little widget above to get the answer for any day.
+            </p>
+            <p>
+              Also, just a note, it seems your current Wordle solution depends
+              on your timezone. So players in Oceania get to post their answers
+              to Twitter first!
             </p>
           </section>
         </article>

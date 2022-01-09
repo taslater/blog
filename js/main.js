@@ -2337,7 +2337,7 @@ submitBtn.addEventListener("click", () => {
 
 function getIndex(date) {
   date = new Date(date + "T00:00");
-  return Math.floor((date - startDate) / 864e5);
+  return Math.floor((date - startDate) / 864e5) % solutions.length;
 }
 
 function getSolution() {
